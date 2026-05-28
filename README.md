@@ -1,61 +1,90 @@
-﻿# CabNow 🚖 (Uber Clone)
+# CabNow 🚖 (Uber Clone)
 
-Welcome to **CabNow**, a premium, modern ride-booking web application inspired by Uber. CabNow is built to handle dynamic ride requests, fare estimations, geolocation-based driver dispatch, and interactive trip tracking.
+Welcome to **CabNow**, a premium, modern ride-booking web application inspired by Uber. CabNow handles dynamic ride requests, fare estimations, geolocation-based driver dispatch, and interactive trip tracking.
 
 ---
 
 ## 🏗️ Project Architecture
 
-The application is structured into two main components:
-
-* **`/backend`:** A high-performance REST API built using **Python FastAPI** and **Uvicorn**. It handles coordinates logic, fare calculations, active driver lists, and trip state management.
-* **`/frontend`:** A modern single-page dashboard built using **React (Vite)** and CSS (designed for high-fidelity animations, map integration, and responsive layout). *(Ready for implementation!)*
+```
+Cabnow-uber-clone/
+│
+├── backend/                 # Python FastAPI REST API
+│   ├── main.py              # Core API engine (drivers, rides, tracking)
+│   ├── requirements.txt     # Python dependencies
+│   └── .env.example         # Environment variable template
+│
+├── frontend/                # React (Vite) SPA
+│   ├── src/
+│   │   ├── App.jsx          # Root component & app state
+│   │   ├── main.jsx         # React entry point
+│   │   ├── index.css        # Global design system (dark mode, variables)
+│   │   ├── api.js           # Backend API client
+│   │   └── components/
+│   │       ├── BookingForm.jsx   # Ride booking form
+│   │       ├── DriversPanel.jsx  # Live driver list with auto-refresh
+│   │       └── TripTracker.jsx   # Live trip status & accept/cancel
+│   └── index.html           # HTML entry point
+│
+└── .gitignore
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Backend Engine:** Python, FastAPI, Uvicorn, Pydantic
-* **Frontend Platform:** React.js, Vite, Vanilla CSS
-* **Tracking & Maps:** Custom geocoordinate tracking and simulated path distance (Haversine formula)
-
----
-
-## 📂 Repository Structure
-
-```text
-Cabnow uber clone/
-│
-├── backend/                 # Python ASGI REST API Infrastructure
-│   ├── main.py              # FastAPI Application Core Engine
-│   ├── requirements.txt     # Python Packages Dependencies
-│   └── README.md            # Backend Setup & Execution Guide
-│
-├── frontend/                # React.js Client Canvas Dashboard
-│
-└── .gitignore               # Multi-layer Version Control Exclusions
-```
+| Layer | Tech |
+|-------|------|
+| **Backend** | Python, FastAPI, Uvicorn, Pydantic |
+| **Frontend** | React 19, Vite 6, Vanilla CSS |
+| **Algorithms** | Haversine distance formula, dynamic fare pricing |
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Launching the Backend API
-1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-2. Activate your virtual environment and install dependencies:
-   ```bash
-   venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-3. Run the development server:
-   ```bash
-   uvicorn main:app --reload
-   ```
+### 1. Launch the Backend API
 
-The backend API will be live at `http://127.0.0.1:8000`. You can explore the interactive OpenAPI documentation at `http://127.0.0.1:8000/docs`.
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-### 2. Setting Up the Frontend
-To set up the frontend, navigate to the `frontend` folder, install standard web dependencies, and launch your bundler (Vite).
+The API will be live at `http://127.0.0.1:8000`.  
+Explore the docs at `http://127.0.0.1:8000/docs`.
+
+### 2. Launch the Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The app will be live at `http://localhost:5173`.
+
+> **Important:** Run the backend first. The frontend connects to `http://127.0.0.1:8000` automatically.
+
+---
+
+## ✨ Features
+
+- 🗺️ **Ride Booking** — Select pickup/destination from NYC landmarks, choose Standard / Premium / Moto
+- 💰 **Instant Fare Estimate** — Haversine-based distance + dynamic pricing by ride type
+- 🧑‍✈️ **Driver Matching** — Nearest available driver is matched automatically
+- 📡 **Live Trip Tracking** — Status progresses: Searching → Accepted → In Progress → Completed
+- ↻ **Auto-refresh Drivers Panel** — Refreshes every 10 seconds
+- ❌ **Cancel Anytime** — Cancel before or during the ride
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/drivers` | List all drivers + availability |
+| `POST` | `/api/rides/request` | Create a new ride request |
+| `POST` | `/api/rides/{id}/accept` | Accept driver offer |
+| `GET` | `/api/rides/{id}/status` | Poll current ride status |
+| `POST` | `/api/rides/{id}/cancel` | Cancel the ride |

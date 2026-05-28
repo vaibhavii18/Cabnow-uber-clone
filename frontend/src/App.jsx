@@ -1,122 +1,137 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import "./index.css";
+import BookingForm from "./components/BookingForm";
+import DriversPanel from "./components/DriversPanel";
+import TripTracker from "./components/TripTracker";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [activeRide, setActiveRide] = useState(null);
+  const [view, setView] = useState("book"); // "book" | "track"
+
+  function handleRideRequested(ride) {
+    setActiveRide(ride);
+    setView("track");
+  }
+
+  function handleRideComplete() {
+    setActiveRide(null);
+    setView("book");
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app-wrapper">
+      {/* ---- Navbar ---- */}
+      <nav className="navbar">
+        <a className="navbar-logo" href="#" onClick={() => { setView("book"); setActiveRide(null); }}>
+          🚖 Cab<span>Now</span>
+          <span className="navbar-badge">NYC</span>
+        </a>
+        <div className="navbar-status">
+          <span className="status-dot" />
+          API Online
         </div>
+      </nav>
+
+      {/* ---- Hero ---- */}
+      {view === "book" && (
+        <section className="hero">
+          <h1>
+            Your ride,<br />
+            <em>your way.</em>
+          </h1>
+          <p>Book a cab in seconds. Real-time driver matching, instant fare estimates.</p>
+        </section>
+      )}
+
+      {/* ---- Main Content ---- */}
+      <main className="main-content">
+        {/* LEFT COLUMN */}
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+          {view === "book" ? (
+            <div className="card">
+              <div className="card-header">
+                <span className="card-icon">🗺️</span>
+                <div>
+                  <div className="card-title">Book a Ride</div>
+                  <div className="card-subtitle">Pick your location and ride type</div>
+                </div>
+              </div>
+              <BookingForm onRideRequested={handleRideRequested} />
+            </div>
+          ) : (
+            <div className="card">
+              <div className="card-header">
+                <span className="card-icon">📡</span>
+                <div>
+                  <div className="card-title">Trip Tracker</div>
+                  <div className="card-subtitle">Live status of your ride</div>
+                </div>
+              </div>
+              {activeRide && (
+                <TripTracker
+                  ride={activeRide}
+                  onRideComplete={handleRideComplete}
+                  onCancelComplete={handleRideComplete}
+                />
+              )}
+            </div>
+          )}
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        {/* RIGHT COLUMN — always show drivers panel */}
+        <div>
+          <div className="card">
+            <div className="card-header">
+              <span className="card-icon">🧑‍✈️</span>
+              <div>
+                <div className="card-title">Active Drivers</div>
+                <div className="card-subtitle">Nearby drivers in New York City</div>
+              </div>
+            </div>
+            <DriversPanel />
+          </div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          {/* Fare guide */}
+          <div className="card" style={{ marginTop: "1.2rem" }}>
+            <div className="card-header">
+              <span className="card-icon">💰</span>
+              <div>
+                <div className="card-title">Fare Guide</div>
+                <div className="card-subtitle">Transparent pricing per ride type</div>
+              </div>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              {[
+                { type: "🚗 Standard", base: "$3.50", rate: "$1.80/km", multiplier: "1x" },
+                { type: "🚘 Premium", base: "$6.00", rate: "$3.00/km", multiplier: "1.5x" },
+                { type: "🏍️ Moto", base: "$2.00", rate: "$1.00/km", multiplier: "0.8x" },
+              ].map((row) => (
+                <div
+                  key={row.type}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "var(--color-surface-2)",
+                    borderRadius: "var(--radius-sm)",
+                    padding: "0.65rem 0.9rem",
+                    fontSize: "0.82rem",
+                  }}
+                >
+                  <span style={{ fontWeight: 600 }}>{row.type}</span>
+                  <span className="text-muted">{row.base} + {row.rate}</span>
+                  <span className="text-yellow" style={{ fontWeight: 700 }}>{row.multiplier}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </main>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* ---- Footer ---- */}
+      <footer className="footer">
+        Built with ❤️ · <span>CabNow</span> Uber Clone · FastAPI + React
+      </footer>
+    </div>
+  );
 }
-
-export default App
