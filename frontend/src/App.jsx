@@ -24,7 +24,7 @@ export default function App() {
       <nav className="navbar">
         <a className="navbar-logo" href="#" onClick={() => { setView("book"); setActiveRide(null); }}>
           🚖 Cab<span>Now</span>
-          <span className="navbar-badge">NYC</span>
+          <span className="navbar-badge">GHY</span>
         </a>
         <div className="navbar-status">
           <span className="status-dot" />
@@ -85,7 +85,7 @@ export default function App() {
               <span className="card-icon">🧑‍✈️</span>
               <div>
                 <div className="card-title">Active Drivers</div>
-                <div className="card-subtitle">Nearby drivers in New York City</div>
+                <div className="card-subtitle">Nearby drivers in Guwahati, Assam</div>
               </div>
             </div>
             <DriversPanel />

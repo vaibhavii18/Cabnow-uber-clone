@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { requestRide } from "../api";
 
-// Predefined locations for easy demo
+// Predefined locations — Guwahati, Assam, India
 const LOCATIONS = [
-  { label: "Times Square", address: "Times Square, NYC", latitude: 40.758, longitude: -73.9855 },
-  { label: "JFK Airport", address: "JFK Airport, NYC", latitude: 40.6413, longitude: -73.7781 },
-  { label: "Central Park", address: "Central Park, NYC", latitude: 40.7851, longitude: -73.9683 },
-  { label: "Brooklyn Bridge", address: "Brooklyn Bridge, NYC", latitude: 40.7061, longitude: -73.9969 },
-  { label: "Statue of Liberty", address: "Statue of Liberty, NYC", latitude: 40.6892, longitude: -74.0445 },
-  { label: "Empire State", address: "Empire State Building, NYC", latitude: 40.7484, longitude: -73.9967 },
+  { label: "Paltan Bazaar", address: "Paltan Bazaar, Guwahati", latitude: 26.1844, longitude: 91.7458 },
+  { label: "Guwahati Airport", address: "Lokpriya Gopinath Bordoloi Airport, Guwahati", latitude: 26.1061, longitude: 91.5859 },
+  { label: "Kamakhya Temple", address: "Kamakhya Temple, Guwahati", latitude: 26.1664, longitude: 91.6374 },
+  { label: "Dispur", address: "Dispur, Guwahati", latitude: 26.1384, longitude: 91.8007 },
+  { label: "IIT Guwahati", address: "IIT Guwahati, North Guwahati", latitude: 26.1924, longitude: 91.6963 },
+  { label: "Fancy Bazaar", address: "Fancy Bazaar, Guwahati", latitude: 26.1871, longitude: 91.7385 },
+  { label: "Uzanbazar", address: "Uzanbazar, Guwahati", latitude: 26.1892, longitude: 91.7512 },
+  { label: "Zoo Road", address: "Zoo Road, Guwahati", latitude: 26.1550, longitude: 91.7743 },
 ];
 
 const RIDE_TYPES = [

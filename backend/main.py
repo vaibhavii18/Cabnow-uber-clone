@@ -1,4 +1,4 @@
-﻿import uuid
+import uuid
 import math
 import random
 import logging
@@ -46,36 +46,36 @@ class RideRequest(BaseModel):
 class RideUpdate(BaseModel):
     status: str
 
-# Simulated Drivers Database (Real-time tracking of available drivers in New York City area)
+# Simulated Drivers Database (Real-time tracking of available drivers in Guwahati area)
 DRIVERS_DB = [
     {
         "id": "driver_01",
-        "name": "Alex Mercer",
-        "vehicle": "Toyota Prius (Black) - NY982X",
-        "phone": "+1 (555) 123-4567",
+        "name": "Rajesh Borah",
+        "vehicle": "Maruti Swift Dzire (White) - AS01AC1234",
+        "phone": "+91 98540 11234",
         "rating": 4.9,
-        "latitude": 40.7128,
-        "longitude": -74.0060,
+        "latitude": 26.1844,
+        "longitude": 91.7458,
         "status": "available"
     },
     {
         "id": "driver_02",
-        "name": "Sophia Rodriguez",
-        "vehicle": "Tesla Model 3 (White) - NY104A",
-        "phone": "+1 (555) 987-6543",
+        "name": "Priya Deka",
+        "vehicle": "Hyundai i20 (Silver) - AS01BD5678",
+        "phone": "+91 97070 22345",
         "rating": 4.8,
-        "latitude": 40.7250,
-        "longitude": -73.9980,
+        "latitude": 26.1664,
+        "longitude": 91.6374,
         "status": "available"
     },
     {
         "id": "driver_03",
-        "name": "Marcus Vance",
-        "vehicle": "Hyundai Sonata (Silver) - NY745Z",
-        "phone": "+1 (555) 456-7890",
+        "name": "Amit Kalita",
+        "vehicle": "Tata Nexon (Black) - AS01CE9012",
+        "phone": "+91 94351 33456",
         "rating": 4.7,
-        "latitude": 40.7090,
-        "longitude": -74.0130,
+        "latitude": 26.1384,
+        "longitude": 91.8007,
         "status": "available"
     }
 ]
